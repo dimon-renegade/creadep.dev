@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="ru">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width"/>
+
+    <title>TEMPLATE</title>
+
+    <!-- COMPILE PAGES WITH SOME CONTEXT -->
+
+    <!-- @if NODE_ENV!='main' && NODE_ENV!='build' -->
+    <link rel="stylesheet" href="assets/css/main.css"/>
+    <!-- @endif -->
+    <!-- @if NODE_ENV!='base' && NODE_ENV!='build' -->
+    <link rel="stylesheet" href="assets/css/comp.base.css"/>
+    <!-- @endif -->
+    <!-- @if NODE_ENV!='global' && NODE_ENV!='build' -->
+    <link rel="stylesheet" href="assets/css/comp.global.css"/>
+    <!-- @endif -->
+    <!-- @if NODE_ENV!='view' && NODE_ENV!='build' -->
+    <link rel="stylesheet" href="assets/css/comp.view.css"/>
+    <!-- @endif -->
+
+    <!-- @if NODE_ENV='main' -->
+    <link rel="stylesheet/less" type="text/css" href="../src/style/main.less"/>
+    <!-- @endif -->
+    <!-- @if NODE_ENV='base' -->
+    <link rel="stylesheet/less" type="text/css" href="../src/style/comp.base.less"/>
+    <!-- @endif -->
+    <!-- @if NODE_ENV='global' -->
+    <link rel="stylesheet/less" type="text/css" href="../src/style/comp.global.less"/>
+    <!-- @endif -->
+    <!-- @if NODE_ENV='view' -->
+    <link rel="stylesheet/less" type="text/css" href="../src/style/comp.view.less"/>
+    <!-- @endif -->
+
+    <!-- @if NODE_ENV!='build' -->
+    <script>
+        less = {
+            env: "development",
+            logLevel: 2,
+            async: false,
+            fileAsync: false,
+            poll: 1000,
+            dumpLineNumbers: "comments",
+            relativeUrls: true
+        };
+    </script>
+
+    <script src="../bower_components/less/dist/less.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <!-- @endif -->
+
+
+    <!-- @if NODE_ENV='build' -->
+    <link rel="stylesheet" href="assets/css/build.css"/>
+    <script src="assets/js/build.js"></script>
+    <!-- @endif -->
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    @@include('../comp/global/header/template/header.html', 'title': 'Header Title')
+
+
+</body>
+</html>
