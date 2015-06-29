@@ -266,7 +266,7 @@ gulp.task('local:app', function () {
 gulp.task('server:sftp', function () {
     return gulp.src('app/*')
         .pipe(sftp({
-            host: 'dev.syneforge.com',
+            host: '*host_path',
             auth: 'keyUser'
         }));
 });
