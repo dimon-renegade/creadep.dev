@@ -1,0 +1,192 @@
+@import "../base/_var";
+
+/* Grid Create Init */
+.make-grid-columns(@grid-columns) {
+    // Common styles for all sizes of grid columns, widths 1-12 & 1-10
+    .col(@index) when (@index = 1) {
+        // initial
+        @item: ~".grid-col__@{index}-@{grid-columns}";
+
+        .calc-grid-column(@index, @item, @grid-columns);
+        .calc-grid-column-margin(@index, @item, @grid-columns);
+
+        .col((@index + 1), @item);
+
+    }
+    .col(@index, @list) when (@index =< @grid-columns) {
+        // general; "=<" isn't a typo
+        @item: ~".grid-col__@{index}-@{grid-columns}";
+
+        .calc-grid-column(@index, @item, @grid-columns);
+        .calc-grid-column-margin(@index, @item, @grid-columns);
+
+        .col((@index + 1), ~"@{list}, @{item}");
+    }
+    .col(@index, @list) when (@index > @grid-columns) {
+        // terminal
+
+        @{list} {
+            position: relative;
+            min-height: 1px;
+        }
+    }
+    .col(1); // kickstart it
+}
+
+.calc-grid-column(@index, @item, @grid-columns) when (@index > 0) {
+    @{item} {
+        width: percentage((@index / @grid-columns));
+    }
+}
+
+.calc-grid-column-margin(@index, @item, @grid-columns) when (@index > 0) {
+    @{item}-left {
+        margin-left: percentage((@index / @grid-columns));
+    }
+    @{item}-right {
+        margin-right: percentage((@index / @grid-columns));
+    }
+}
+
+.make-grid-columns(@grid-12);
+
+.grid {
+    &-wrapper {
+
+        &-cols {
+
+            &.grid-responsive {
+                /* todo: width 100% */
+            }
+
+            & > *[class^="grid-col__"] {
+                float: left;
+                .box-sizing(border-box);
+            }
+
+            &.pd-parent {
+                &.pd-xs,
+                &.pd-sm,
+                &.pd-md,
+                &.pd-lg {
+                    &-sides,
+                    &-both {
+                        margin-left: 0;
+                        margin-right: 0;
+                    }
+                }
+            }
+
+            &.pd-xs {
+                &-sides,
+                &-both {
+                    margin-left: -@grid-padding-sm/2;
+                    margin-right: -@grid-padding-sm/2;
+                }
+                &-sides {
+                    & > *[class^="grid-col__"] {
+                        padding-left: @grid-padding-sm/2;
+                        padding-right: @grid-padding-sm/2;
+                    }
+                }
+                &-both {
+                    &:not(._not-pad) > *[class^="grid-col__"] {
+                        padding: @grid-padding-sm/2;
+                    }
+                }
+            }
+
+            &.pd-sm {
+                &-sides,
+                &-both {
+                    margin-left: -@grid-padding-sm;
+                    margin-right: -@grid-padding-sm;
+                }
+                &-sides {
+                    & > *[class^="grid-col__"] {
+                        padding-left: @grid-padding-sm;
+                        padding-right: @grid-padding-sm;
+                    }
+                }
+                &-both {
+                    &:not(._not-pad) > *[class^="grid-col__"] {
+                        padding: @grid-padding-sm;
+                    }
+                }
+            }
+
+            &.pd-md {
+                &-sides,
+                &-both {
+                    margin-left: -@grid-padding-md;
+                    margin-right: -@grid-padding-md;
+                }
+                &-sides {
+                    & > *[class^="grid-col__"] {
+                        padding-left: @grid-padding-md;
+                        padding-right: @grid-padding-md;
+                    }
+                }
+                &-both {
+                    & > *[class^="grid-col__"] {
+                        padding: @grid-padding-md;
+                    }
+                }
+            }
+
+            &.pd-lg {
+                &-sides,
+                &-both {
+                    margin-left: -@grid-padding-lg;
+                    margin-right: -@grid-padding-lg;
+                }
+                &-sides {
+                    & > *[class^="grid-col__"] {
+                        padding-left: @grid-padding-lg;
+                        padding-right: @grid-padding-lg;
+                    }
+                }
+                &-both {
+                    & > *[class^="grid-col__"] {
+                        padding: @grid-padding-lg;
+                    }
+                }
+            }
+        }
+
+        &-cell {
+            width: 100%;
+            display: table;
+            & > *[class^="grid-col__"] {
+                float: none;
+                display: table-cell;
+                vertical-align: middle;
+            }
+        }
+
+        &, &-cols {
+            &:before,
+            &:after {
+                content: " ";
+                display: table;
+            }
+            &:after {
+                clear: both;
+            }
+        }
+    }
+
+    &-col {
+        &__left {
+            float: left;
+
+        }
+        &__right {
+            float: right;
+        }
+        &__auto {
+            width: auto !important;
+        }
+    }
+}
+
